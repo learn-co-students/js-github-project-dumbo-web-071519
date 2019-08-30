@@ -11,3 +11,12 @@
 ul {
   list-style: none;
 }
+img{
+  width:100px;
+  height:100px;
+}
+ul > li{
+  border: 2px dotted black;
+  margin-bottom:5px;
+  padding:5px;
+}
