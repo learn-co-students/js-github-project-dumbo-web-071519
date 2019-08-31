@@ -11,3 +11,11 @@
 ul {
   list-style: none;
 }
+ul > .user_profile{
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #000;
+}
+ul > .user_profile img{
+  max-width: 75px;
+}
