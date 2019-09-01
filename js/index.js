@@ -25,6 +25,7 @@ form.addEventListener("submit", (e) => {
 
 function getUserSearchResults(userList) {
   usersDiv.innerText = ""
+  reposDiv.innerText = ""
 
   userList.items.forEach((user) => {
     //console.dir(user)
@@ -32,6 +33,9 @@ function getUserSearchResults(userList) {
     // GIVE DIV ID AND DISPLAY USERNAME
     const userDiv = document.createElement("div")
     userDiv.id = `id-${user.id}`
+    userDiv.setAttribute("class", `js-data-${user.login}`)
+    // console.log(userDiv)
+    // console.dir(userDiv)
     userDiv.innerText = `User: ${user.login}`
     userDiv.style = "font-size: 20px;"
 
@@ -66,22 +70,29 @@ function getUserSearchResults(userList) {
 usersDiv.addEventListener("click", (e) => {
   const repoP = usersDiv.querySelector(".js-user-repo")
   if (e.target.class === "js-user-repo") {
-    makeRepoFetch()
+    const splitDivClass = e.target.parentNode.classList.value.split("-")
+    const userName = splitDivClass[splitDivClass.length-1]
+    makeRepoFetch(userName)
   }
-
 })
 
-function makeRepoFetch() {
+function makeRepoFetch(user) {
   // User Repos Endpoint
-  fetch("https://api.github.com/users/octocat/repos", config)
+  fetch(`https://api.github.com/users/${user}/repos`, config)
   .then(response => response.json())
   .then(getRepoSearchResults)
 }
 
 function getRepoSearchResults(data) {
-  console.log("repo endpoint: ", data)
+  //console.log("repo endpoint: ", data)
+  document.querySelector("#repos-list").innerHTML = ""
+
   const repoDiv = document.createElement("div")
-  repoDiv.innerText = "repo data will go here"
+  repoDiv.innerText = "First 30 Repos:"
+  data.forEach((repo, index) => {
+    repoDiv.innerHTML += `<p><a href="${repo.html_url}" />repo ${index+1}</p>`
+  })
+
   reposDiv.appendChild(repoDiv)
 
 }
