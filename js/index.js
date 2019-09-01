@@ -50,14 +50,15 @@ function getUserSearchResults(userList) {
     userDiv.appendChild(userAvatarImg)
 
     // ADD PROFILE LINK TO USER DIV
-    userDiv.innerHTML += `<p><a href="${user.html_url}" />PROFILE</p>`
+    userDiv.innerHTML += `<p><a href="${user.html_url}" />Profile...</p>`
 
     // ADD 'REPO' P TAG
-    const repoP = document.createElement("p")
-    repoP.class = "js-user-repo"
-    //console.dir(repoP)
-    repoP.innerText = "REPO"
-    userDiv.appendChild(repoP)
+    const repoPTag = document.createElement("p")
+    repoPTag.class = "js-user-repo"
+    //console.dir(repoPTag)
+    repoPTag.innerHTML = "Click here for repos..."
+    repoPTag.style = "color: blue; text-decoration: underline;"
+    userDiv.appendChild(repoPTag)
 
     // ADD USER TO DIV
     usersDiv.appendChild(userDiv)
@@ -66,9 +67,9 @@ function getUserSearchResults(userList) {
   })
 }
 
-// DELEGATE EVENT LISTENER TO 'repoP'
+// DELEGATE EVENT LISTENER TO 'repoPTag'
 usersDiv.addEventListener("click", (e) => {
-  const repoP = usersDiv.querySelector(".js-user-repo")
+  const repoPTag = usersDiv.querySelector(".js-user-repo")
   if (e.target.class === "js-user-repo") {
     const splitDivClass = e.target.parentNode.classList.value.split("-")
     const userName = splitDivClass[splitDivClass.length-1]
@@ -90,7 +91,7 @@ function getRepoSearchResults(data) {
   const repoDiv = document.createElement("div")
   repoDiv.innerText = "First 30 Repos:"
   data.forEach((repo, index) => {
-    repoDiv.innerHTML += `<p><a href="${repo.html_url}" />repo ${index+1}</p>`
+    repoDiv.innerHTML += `<p><a href="${repo.html_url}" />Repo ${index+1}: ${repo.html_url}</p>`
   })
 
   reposDiv.appendChild(repoDiv)
